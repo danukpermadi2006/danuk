@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Mabar - Live System</title>
+    
+    <!-- Google Fonts: Rajdhani & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        gaming: ['"Rajdhani"', 'sans-serif'],
+                        ui: ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkbg: '#050508',
+                        cardbg: 'rgba(15, 15, 25, 0.6)',
+                        neon: {
+                            cyan: '#00f3ff',
+                            pink: '#ff007c',
+                            purple: '#b026ff',
+                            success: '#00ff88',
+                            warning: '#ffaa00',
+                            danger: '#ff0033'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050508; 
+            color: #e2e8f0; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(176, 38, 255, 0.05), transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050508; }
+        ::-webkit-scrollbar-thumb { background: #b026ff; border-radius: 10px; }
+
+        /* --- GLASSMORPHISM CARDS --- */
+        .cyber-card {
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.8) 0%, rgba(10, 10, 15, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-25deg); transition: all 0.5s; pointer-events: none;
+        }
+
+        .cyber-card:hover { transform: translateY(-3px); }
+        .cyber-card:hover::before { left: 200%; }
+
+        .neon-text-cyan { text-shadow: 0 0 10px rgba(0, 243, 255, 0.6); }
+        .neon-text-purple { text-shadow: 0 0 10px rgba(176, 38, 255, 0.6); }
+
+        /* Admin Input Style */
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .cyber-input:focus { border-color: #00f3ff; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); outline: none; }
+
+        .time-box { width: 60px; text-align: center; }
+        
+        /* Modal Animation */
+        #login-modal, #admin-panel { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .modal-active { opacity: 1 !important; pointer-events: auto !important; transform: scale(1) !important; }
+        .modal-inactive { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.4; }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <!-- Background Particles -->
+    <div id="particles"></div>
+
+    <!-- ================= HEADER ================= -->
+    <header class="w-full bg-[rgba(15,15,20,0.8)] backdrop-blur-md border-b border-neon-cyan/20 sticky top-0 z-50 shadow-[0_0_20px_rgba(0,243,255,0.1)]">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <i class="fa-solid fa-gamepad text-2xl text-neon-cyan group-hover:drop-shadow-[0_0_8px_#00f3ff] transition-all"></i>
+                <h1 class="font-gaming font-bold text-xl md:text-2xl tracking-wider neon-text-cyan">
+                    OPEN MABAR <span class="text-[10px] md:text-xs text-neon-success bg-neon-success/10 px-2 py-0.5 rounded ml-1 border border-neon-success/30 align-middle">LIVE</span>
+                </h1>
+            </a>
+            
+            <button id="role-toggle" onclick="toggleRole()" class="font-gaming font-bold text-sm tracking-widest px-4 py-1.5 rounded-full border border-neon-cyan text-neon-cyan bg-neon-cyan/10 hover:bg-neon-cyan/20 transition-colors shadow-[0_0_10px_rgba(0,243,255,0.2)] flex items-center gap-2">
+                <i class="fa-solid fa-eye"></i> USER
+            </button>
+        </div>
+    </header>
+
+    <!-- ================= LOGIN MODAL ================= -->
+    <div id="login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000] flex items-center justify-center modal-inactive">
+        <div class="cyber-card p-8 rounded-xl border-t-2 border-neon-pink w-[90%] max-w-sm text-center">
+            <div class="w-16 h-16 rounded-full bg-neon-pink/10 border border-neon-pink flex items-center justify-center mx-auto mb-4 text-neon-pink text-2xl shadow-[0_0_15px_rgba(255,0,124,0.3)]">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="font-gaming font-bold text-2xl text-white mb-1">Admin Access</h2>
+            <p class="font-ui text-xs text-gray-400 mb-6">Masukkan password untuk mengelola antrean.</p>
+            
+            <input type="password" id="admin-pass" placeholder="Password..." class="cyber-input w-full rounded-lg px-4 py-3 mb-4 text-center font-gaming tracking-widest">
+            
+            <button onclick="verifyAdmin()" class="w-full bg-neon-pink text-white font-gaming font-bold tracking-widest py-3 rounded-lg hover:bg-[#d60068] transition-colors shadow-[0_0_15px_rgba(255,0,124,0.4)] mb-3">
+                LOGIN <i class="fa-solid fa-right-to-bracket ml-1"></i>
+            </button>
+            <button onclick="closeLoginModal()" class="w-full bg-transparent text-gray-400 font-ui text-sm py-2 hover:text-white transition-colors">Batal</button>
+        </div>
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="w-full max-w-6xl px-4 py-8 z-10 flex flex-col gap-8">
+
+        <!-- ADMIN PANEL (Hidden by default) -->
+        <section id="admin-panel" class="cyber-card rounded-xl border-t-2 border-neon-cyan p-6 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-white/10 pb-4">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-sliders text-neon-cyan text-xl"></i>
+                    <h2 class="font-gaming font-bold text-2xl text-white">Control Panel</h2>
+                </div>
+                <button onclick="resetAllData()" class="bg-red-500/10 border border-red-500 text-red-500 font-gaming font-bold px-4 py-2 rounded hover:bg-red-500 hover:text-white transition-all text-sm tracking-wider">
+                    <i class="fa-solid fa-trash-can mr-1"></i> RESET SEMUA DATA
+                </button>
+            </div>
+            
+            <form id="add-player-form" class="flex flex-wrap gap-4 items-end" onsubmit="addPlayer(event)">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block font-ui text-xs text-gray-400 mb-1">Nama Player</label>
+                    <input type="text" id="player-name" placeholder="Contoh: GamerOne" required autocomplete="off" class="cyber-input w-full rounded px-4 py-2 text-sm font-bold">
+                </div>
+                
+                <div class="w-full sm:w-auto">
+                    <label class="block font-ui text-xs text-gray-400 mb-1">Mode Mabar</label>
+                    <select id="player-mode" onchange="toggleInputMode()" class="cyber-input w-full rounded px-4 py-2 text-sm">
+                        <option value="game">🎮 Per Game (Match)</option>
+                        <option value="timer">⏱️ Per Timer (Waktu)</option>
+                    </select>
+                </div>
+                
+                <div id="game-inputs" class="w-full sm:w-auto">
+                    <label class="block font-ui text-xs text-gray-400 mb-1">Jml Game</label>
+                    <input type="number" id="game-count" placeholder="0" min="1" value="1" required class="cyber-input rounded px-3 py-2 text-sm w-20 text-center font-bold">
+                </div>
+                
+                <div id="timer-inputs" class="hidden w-full sm:w-auto flex gap-2">
+                    <div>
+                        <label class="block font-ui text-xs text-gray-400 mb-1 text-center">Jam</label>
+                        <input type="number" id="time-h" class="cyber-input rounded px-2 py-2 text-sm time-box font-bold" min="0" value="0">
+                    </div>
+                    <div>
+                        <label class="block font-ui text-xs text-gray-400 mb-1 text-center">Mnt</label>
+                        <input type="number" id="time-m" class="cyber-input rounded px-2 py-2 text-sm time-box font-bold" min="0" max="59" value="30">
+                    </div>
+                    <div>
+                        <label class="block font-ui text-xs text-gray-400 mb-1 text-center">Dtk</label>
+                        <input type="number" id="time-s" class="cyber-input rounded px-2 py-2 text-sm time-box font-bold" min="0" max="59" value="0">
+                    </div>
+                </div>
+
+                <button type="submit" class="bg-neon-cyan text-[#050508] font-gaming font-bold tracking-widest px-6 py-2 rounded hover:bg-[#00c4cc] transition-colors shadow-[0_0_10px_rgba(0,243,255,0.3)] w-full sm:w-auto mt-2 sm:mt-0 h-[38px]">
+                    <i class="fa-solid fa-plus mr-1"></i> TAMBAH
+                </button>
+            </form>
+        </section>
+
+        <!-- DASHBOARD (GRID KIRI KANAN) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- KOLOM GAME -->
+            <div>
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-neon-cyan/30">
+                    <i class="fa-solid fa-gamepad text-neon-cyan text-xl"></i>
+                    <h3 class="font-gaming font-bold text-xl text-white tracking-wider">MODE: PER GAME</h3>
+                </div>
+                <div id="game-list" class="flex flex-col gap-4">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+
+            <!-- KOLOM TIMER -->
+            <div>
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-neon-purple/30">
+                    <i class="fa-solid fa-stopwatch text-neon-purple text-xl"></i>
+                    <h3 class="font-gaming font-bold text-xl text-white tracking-wider">MODE: PER TIMER</h3>
+                </div>
+                <div id="timer-list" class="flex flex-col gap-4">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Efek Partikel Sederhana
+        const particles = document.getElementById('particles');
+        for(let i=0; i<40; i++) {
+            let div = document.createElement('div');
+            div.style.position = 'absolute';
+            div.style.width = Math.random() * 3 + 'px';
+            div.style.height = div.style.width;
+            div.style.background = Math.random() > 0.5 ? '#00f3ff' : '#b026ff';
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            div.style.borderRadius = '50%';
+            div.style.opacity = Math.random() * 0.5 + 0.1;
+            div.style.transition = 'transform 10s linear';
+            particles.appendChild(div);
+        }
+
+        // ==========================================
+        // KONFIGURASI FIREBASE (DARI KODE ASLI)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdcmVF-IUXjPc8NZAdSAmpfb5exzhqTk",
+            authDomain: "open-mabar.firebaseapp.com",
+            projectId: "open-mabar",
+            storageBucket: "open-mabar.firebasestorage.app",
+            messagingSenderId: "1018568369507",
+            appId: "1:1018568369507:web:8ae25833b167cdecd01f56",
+            measurementId: "G-F4BN56FD9T"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- STATE MANAGEMENT ---
+        let players = [];
+        let isAdmin = false;
+        let timerInterval = null;
+
+        // --- INIT & SINKRONISASI DATABASE ---
+        function init() {
+            if (sessionStorage.getItem('isAdmin') === 'true') {
+                isAdmin = true;
+                startGlobalTimer(); 
+            }
+            updateUIRole();
+
+            db.ref('mabar_sessions').on('value', (snapshot) => {
+                const data = snapshot.val();
+                players = data ? data : [];
+                renderDashboard(); 
+            });
+        }
+
+        function saveDataToFirebase() {
+            if (isAdmin) {
+                db.ref('mabar_sessions').set(players);
+            }
+        }
+
+        // --- ROLE MANAGEMENT ---
+        function toggleRole() {
+            if (isAdmin) {
+                isAdmin = false;
+                sessionStorage.setItem('isAdmin', 'false');
+                if(timerInterval) clearInterval(timerInterval); 
+                updateUIRole();
+                renderDashboard();
+            } else {
+                const modal = document.getElementById('login-modal');
+                modal.classList.remove('modal-inactive');
+                modal.classList.add('modal-active');
+                document.getElementById('admin-pass').value = '';
+                document.getElementById('admin-pass').focus();
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            modal.classList.remove('modal-active');
+            modal.classList.add('modal-inactive');
+        }
+
+        function verifyAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'Dnkprmdi2006') { 
+                isAdmin = true;
+                sessionStorage.setItem('isAdmin', 'true');
+                closeLoginModal();
+                updateUIRole();
+                startGlobalTimer(); 
+                renderDashboard();
+            } else {
+                alert('Password Salah!');
+            }
+        }
+
+        function updateUIRole() {
+            const roleToggle = document.getElementById('role-toggle');
+            const adminPanel = document.getElementById('admin-panel');
+            if (isAdmin) {
+                roleToggle.className = 'font-gaming font-bold text-sm tracking-widest px-4 py-1.5 rounded-full border border-neon-pink text-neon-pink bg-neon-pink/10 hover:bg-neon-pink/20 transition-colors shadow-[0_0_10px_rgba(255,0,124,0.2)] flex items-center gap-2 cursor-pointer';
+                roleToggle.innerHTML = '<i class="fa-solid fa-crown"></i> ADMIN';
+                adminPanel.classList.remove('hidden');
+                setTimeout(() => adminPanel.classList.add('modal-active'), 10);
+            } else {
+                roleToggle.className = 'font-gaming font-bold text-sm tracking-widest px-4 py-1.5 rounded-full border border-neon-cyan text-neon-cyan bg-neon-cyan/10 hover:bg-neon-cyan/20 transition-colors shadow-[0_0_10px_rgba(0,243,255,0.2)] flex items-center gap-2 cursor-pointer';
+                roleToggle.innerHTML = '<i class="fa-solid fa-eye"></i> USER';
+                adminPanel.classList.add('hidden');
+                adminPanel.classList.remove('modal-active');
+            }
+        }
+
+        // --- FORM HANDLING ---
+        function toggleInputMode() {
+            const mode = document.getElementById('player-mode').value;
+            const gameInputs = document.getElementById('game-inputs');
+            const timerInputs = document.getElementById('timer-inputs');
+            
+            if (mode === 'game') {
+                gameInputs.classList.remove('hidden');
+                timerInputs.classList.add('hidden');
+                document.getElementById('game-count').required = true;
+            } else {
+                gameInputs.classList.add('hidden');
+                timerInputs.classList.remove('hidden');
+                timerInputs.classList.add('flex');
+                document.getElementById('game-count').required = false;
+            }
+        }
+
+        function addPlayer(e) {
+            e.preventDefault();
+            const name = document.getElementById('player-name').value;
+            const mode = document.getElementById('player-mode').value;
+            
+            const newPlayer = { id: Date.now().toString(), name: name, mode: mode };
+
+            if (mode === 'game') {
+                const count = parseInt(document.getElementById('game-count').value);
+                newPlayer.totalGames = count;
+                newPlayer.remainingGames = count;
+                newPlayer.status = 'NOT STARTED';
+            } else {
+                const totalSeconds = (parseInt(document.getElementById('time-h').value) || 0) * 3600 + 
+                                     (parseInt(document.getElementById('time-m').value) || 0) * 60 + 
+                                     (parseInt(document.getElementById('time-s').value) || 0);
+                newPlayer.duration = totalSeconds;
+                newPlayer.remainingTime = totalSeconds;
+                newPlayer.status = 'NOT STARTED';
+            }
+
+            players.push(newPlayer);
+            saveDataToFirebase();
+            document.getElementById('player-name').value = '';
+        }
+
+        function deletePlayer(id) {
+            if(confirm('Hapus player ini dari antrean?')) {
+                players = players.filter(p => p.id !== id);
+                saveDataToFirebase();
+            }
+        }
+
+        function resetAllData() {
+            if(confirm('BAHAYA: Hapus SEMUA antrean? Tindakan ini tidak bisa dibatalkan.')) {
+                players = [];
+                saveDataToFirebase();
+            }
+        }
+
+        // --- GAME MODE LOGIC ---
+        function setGameStatus(id, newStatus) {
+            const p = players.find(x => x.id === id);
+            if (p) { p.status = newStatus; saveDataToFirebase(); }
+        }
+
+        function adjustGame(id, amount) {
+            const p = players.find(x => x.id === id);
+            if (p && p.status !== 'DONE') {
+                p.remainingGames += amount;
+                if (p.remainingGames <= 0) { p.remainingGames = 0; p.status = 'DONE'; } 
+                else if (p.status === 'NOT STARTED') { p.status = 'ON GOING'; }
+                saveDataToFirebase();
+            }
+        }
+
+        // --- TIMER MODE LOGIC ---
+        function setTimerStatus(id, newStatus) {
+            const p = players.find(x => x.id === id);
+            if (p) {
+                if (newStatus === 'PLAYING' && p.remainingTime <= 0) return;
+                p.status = newStatus;
+                saveDataToFirebase();
+            }
+        }
+
+        function formatTime(totalSeconds) {
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function startGlobalTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let needsSync = false;
+                players.forEach(p => {
+                    if (p.mode === 'timer' && p.status === 'PLAYING') {
+                        if (p.remainingTime > 0) { p.remainingTime--; needsSync = true; } 
+                        if (p.remainingTime === 0 && p.status !== 'DONE') { p.status = 'DONE'; needsSync = true; }
+                    }
+                });
+                if (needsSync) saveDataToFirebase();
+            }, 1000);
+        }
+
+        // --- RENDERING UI YANG BARU (CYBERPUNK) ---
+        function renderDashboard() {
+            const gameList = document.getElementById('game-list');
+            const timerList = document.getElementById('timer-list');
+            gameList.innerHTML = ''; timerList.innerHTML = '';
+
+            players.forEach(p => {
+                const card = document.createElement('div');
+                const borderColor = p.mode === 'game' ? 'border-neon-cyan' : 'border-neon-purple';
+                card.className = `cyber-card rounded-lg p-5 border-l-[3px] ${borderColor} group relative`;
+                
+                // Setel Warna Badge Status
+                let badgeStyle = 'bg-gray-500/10 text-gray-400 border-gray-500/30'; // Not Started
+                let glowEffect = '';
+                
+                if (p.status === 'ON GOING' || p.status === 'PLAYING') {
+                    badgeStyle = 'bg-neon-success/10 text-neon-success border-neon-success/30';
+                    glowEffect = 'text-shadow: 0 0 10px rgba(0, 255, 136, 0.5)';
+                } else if (p.status === 'PAUSED') {
+                    badgeStyle = 'bg-neon-warning/10 text-neon-warning border-neon-warning/30';
+                } else if (p.status === 'DONE') {
+                    badgeStyle = 'bg-neon-danger/10 text-neon-danger border-neon-danger/30';
+                }
+
+                let innerHTML = `
+                    ${isAdmin ? `<button class="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition-colors bg-transparent border-0" onclick="deletePlayer('${p.id}')" title="Hapus"><i class="fa-solid fa-xmark text-lg"></i></button>` : ''}
+                    
+                    <div class="flex justify-between items-start mb-3 pr-6">
+                        <span class="font-gaming font-bold text-xl text-white tracking-wide truncate">${p.name}</span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-1 rounded border ${badgeStyle}" style="${glowEffect}">
+                            ${p.status}
+                        </span>
+                    </div>
+                `;
+
+                if (p.mode === 'game') {
+                    // Tampilan Data Game
+                    innerHTML += `
+                        <div class="text-center mb-4">
+                            <span class="font-gaming font-bold text-5xl neon-text-cyan text-white tracking-widest">${p.remainingGames}</span>
+                            <span class="font-ui text-sm text-gray-500 ml-1">/ ${p.totalGames} Match</span>
+                        </div>
+                    `;
+                    
+                    // Tombol Kontrol Admin (Game)
+                    if (isAdmin) {
+                        innerHTML += `<div class="flex flex-wrap gap-2 justify-center border-t border-white/5 pt-4 mt-2">`;
+                        
+                        const btnClass = "font-gaming text-xs tracking-wider px-3 py-1.5 rounded transition-all";
+                        
+                        if (p.status === 'NOT STARTED') {
+                            innerHTML += `<button class="${btnClass} border border-neon-success text-neon-success hover:bg-neon-success hover:text-black" onclick="setGameStatus('${p.id}', 'ON GOING')"><i class="fa-solid fa-play mr-1"></i> MULAI</button>`;
+                        }
+                        if (p.status !== 'DONE') {
+                            innerHTML += `
+                                <button class="${btnClass} border border-neon-warning text-neon-warning hover:bg-neon-warning hover:text-black" onclick="adjustGame('${p.id}', -1)">-1</button>
+                                <button class="${btnClass} border border-neon-warning text-neon-warning hover:bg-neon-warning hover:text-black" onclick="adjustGame('${p.id}', 1)">+1</button>
+                                <button class="${btnClass} border border-neon-success text-neon-success hover:bg-neon-success hover:text-black" onclick="adjustGame('${p.id}', -1)"><i class="fa-solid fa-check mr-1"></i> SELESAI</button>
+                            `;
+                        } else {
+                            innerHTML += `<button class="${btnClass} border border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-black" onclick="adjustGame('${p.id}', 1)"><i class="fa-solid fa-rotate-right mr-1"></i> TAMBAH 1 GAME</button>`;
+                        }
+                        innerHTML += `</div>`;
+                    }
+                    card.innerHTML = innerHTML; gameList.appendChild(card);
+                } 
+                else {
+                    // Tampilan Data Timer
+                    innerHTML += `
+                        <div class="text-center mb-4">
+                            <span class="font-gaming font-bold text-5xl neon-text-purple text-white tracking-widest" id="time-display-${p.id}">${formatTime(p.remainingTime)}</span>
+                        </div>
+                    `;
+                    
+                    // Tombol Kontrol Admin (Timer)
+                    if (isAdmin) {
+                        innerHTML += `<div class="flex flex-wrap gap-2 justify-center border-t border-white/5 pt-4 mt-2">`;
+                        
+                        const btnClass = "font-gaming text-xs tracking-wider px-3 py-1.5 rounded transition-all";
+
+                        if (p.status === 'NOT STARTED' || p.status === 'PAUSED') {
+                            innerHTML += `<button class="${btnClass} border border-neon-success text-neon-success hover:bg-neon-success hover:text-black" onclick="setTimerStatus('${p.id}', 'PLAYING')"><i class="fa-solid fa-play mr-1"></i> ${p.status === 'PAUSED' ? 'RESUME' : 'START'}</button>`;
+                        }
+                        if (p.status === 'PLAYING') {
+                            innerHTML += `<button class="${btnClass} border border-neon-warning text-neon-warning hover:bg-neon-warning hover:text-black" onclick="setTimerStatus('${p.id}', 'PAUSED')"><i class="fa-solid fa-pause mr-1"></i> PAUSE</button>`;
+                        }
+                        if (p.status !== 'DONE' && p.status !== 'NOT STARTED') {
+                            innerHTML += `<button class="${btnClass} border border-neon-danger text-neon-danger hover:bg-neon-danger hover:text-white" onclick="setTimerStatus('${p.id}', 'DONE')"><i class="fa-solid fa-stop mr-1"></i> STOP</button>`;
+                        }
+                        if (p.status === 'DONE') {
+                            innerHTML += `<button class="${btnClass} border border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-black" onclick="setTimerStatus('${p.id}', 'NOT STARTED'); p.remainingTime=p.duration; saveDataToFirebase();"><i class="fa-solid fa-rotate-left mr-1"></i> ULANGI</button>`;
+                        }
+                        innerHTML += `</div>`;
+                    }
+                    card.innerHTML = innerHTML; timerList.appendChild(card);
+                }
+            });
+
+            // Tampilan jika kosong
+            const emptyState = `<div class="cyber-card p-6 rounded-lg text-center border-dashed border-2 border-white/10"><i class="fa-solid fa-ghost text-gray-600 text-3xl mb-2"></i><p class="font-ui text-xs text-gray-500 uppercase tracking-widest">Belum ada antrean</p></div>`;
+            if(gameList.innerHTML === '') gameList.innerHTML = emptyState;
+            if(timerList.innerHTML === '') timerList.innerHTML = emptyState;
+        }
+
+        window.onload = init;
+        document.getElementById('admin-pass').addEventListener('keypress', function (e) { if (e.key === 'Enter') verifyAdmin(); });
+    </script>
+</body>
+</html>

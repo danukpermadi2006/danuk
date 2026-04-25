@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Danuk Store - Top Up Free Fire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1120;
+            color: #cbd5e1;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        /* Kontainer Mobile */
+        .mobile-app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #0f172a;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8);
+            padding-bottom: 120px; /* Ditambah agar tidak tertutup sticky bar */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        
+        .active-item { border-color: #3b82f6 !important; background-color: rgba(59, 130, 246, 0.1) !important; }
+        .active-payment { border-color: #10b981 !important; background-color: rgba(16, 185, 129, 0.1) !important; }
+        
+        .modal-enter { animation: fadeIn 0.2s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-app-container relative">
+    
+    <nav id="main-navbar" class="bg-[#1e293b] sticky top-0 z-40 w-full border-b border-slate-800 shadow-md transition-all"></nav>
+
+    <div class="px-4 mt-5 mb-6">
+        <div class="flex gap-4">
+            <div class="w-24 h-24 bg-slate-800 rounded-2xl flex-shrink-0 border border-slate-700 overflow-hidden relative shadow-lg">
+                <div class="absolute inset-0 bg-gradient-to-tr from-orange-600 to-yellow-500 opacity-20"></div>
+                <img src="https://i.imgur.com/oQibj0T.png" alt="Free Fire" class="w-full h-full object-contain p-2 relative z-10 drop-shadow-xl" onerror="this.src='https://placehold.co/200x200/1e293b/FFF?text=FF'">
+            </div>
+            
+            <div class="flex-1 flex flex-col justify-center">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-[10px] font-semibold bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-slate-400">ID / IDR</span>
+                </div>
+                <h1 class="text-2xl font-bold text-white leading-tight">Free Fire</h1>
+                <p class="text-blue-400 text-sm font-medium mb-2">Garena</p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-[10px] font-medium text-slate-300 mt-3">
+            <span class="flex items-center gap-1 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700"><i class="fa-solid fa-bolt text-yellow-500"></i> Proses Cepat</span>
+            <span class="flex items-center gap-1 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700"><i class="fa-solid fa-headset text-blue-400"></i> Layanan Chat 24/7</span>
+            <span class="flex items-center gap-1 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700"><i class="fa-solid fa-shield-halved text-emerald-500"></i> Pembayaran Aman</span>
+        </div>
+
+        <h3 class="text-white font-bold text-sm mt-5 mb-2">Jaminan Layanan</h3>
+        <div class="grid grid-cols-1 gap-2">
+            <div class="bg-[#1e293b] p-3 rounded-xl border border-slate-800 flex items-center gap-3">
+                <i class="fa-regular fa-clock text-blue-500 text-lg w-6 text-center"></i>
+                <div>
+                    <h4 class="text-white font-semibold text-xs">Jaminan Layanan 24 Jam</h4>
+                    <p class="text-[10px] text-slate-400">Sistem online 24 jam nonstop.</p>
+                </div>
+            </div>
+            <div class="bg-[#1e293b] p-3 rounded-xl border border-slate-800 flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-emerald-500 text-lg w-6 text-center"></i>
+                <div>
+                    <h4 class="text-white font-semibold text-xs">Pembayaran Aman & Terpercaya</h4>
+                    <p class="text-[10px] text-slate-400">Transaksi dilindungi enkripsi tinggi.</p>
+                </div>
+            </div>
+            <div class="bg-[#1e293b] p-3 rounded-xl border border-slate-800 flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-yellow-500 text-lg w-6 text-center"></i>
+                <div>
+                    <h4 class="text-white font-semibold text-xs">Proses Cepat & Otomatis</h4>
+                    <p class="text-[10px] text-slate-400">Pesanan masuk langsung diproses sistem.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 space-y-5">
+        
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">1</div>
+                <h2 class="text-sm font-bold text-white">Masukkan Data Akun</h2>
+            </div>
+            <div class="p-4">
+                <label class="block text-xs font-medium text-slate-400 mb-2">ID Player</label>
+                <div class="relative">
+                    <input 
+                        type="number" 
+                        id="player-id"
+                        placeholder="Masukkan ID"
+                        class="w-full bg-[#0f172a] border border-slate-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 transition"
+                    />
+                </div>
+                <p id="id-error" class="text-red-400 text-xs mt-1.5 hidden"><i class="fa-solid fa-circle-exclamation"></i> ID tidak valid (Minimal 8 angka)</p>
+                <p id="id-success" class="text-emerald-400 text-xs mt-1.5 font-medium hidden"><i class="fa-solid fa-circle-check"></i> ID Valid</p>
+            </div>
+        </section>
+
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">2</div>
+                <h2 class="text-sm font-bold text-white">Pilih Nominal</h2>
+            </div>
+            <div class="p-4">
+                <h3 class="text-xs font-semibold text-white mb-2">Special Items</h3>
+                <div id="special-items-container" class="grid grid-cols-2 gap-2 mb-4"></div>
+
+                <h3 class="text-xs font-semibold text-white mb-2">Diamonds</h3>
+                <div id="diamond-items-container" class="grid grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1 custom-scrollbar"></div>
+            </div>
+        </section>
+
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">3</div>
+                <h2 class="text-sm font-bold text-white">Jumlah Pembelian</h2>
+            </div>
+            <div class="p-4 flex items-center justify-center gap-4">
+                <button onclick="changeQty(-1)" class="w-10 h-10 rounded-lg bg-[#0f172a] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800">-</button>
+                <input type="number" id="qty-input" value="1" readonly class="w-16 text-center bg-transparent text-white font-bold text-lg outline-none" />
+                <button onclick="changeQty(1)" class="w-10 h-10 rounded-lg bg-[#0f172a] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800">+</button>
+            </div>
+        </section>
+
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">4</div>
+                <h2 class="text-sm font-bold text-white">Kode Promo</h2>
+            </div>
+            <div class="p-4 flex flex-col gap-2">
+                <div class="flex gap-2">
+                    <input type="text" id="promo-input" placeholder="Masukkan Kode Promo" class="flex-1 bg-[#0f172a] border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-blue-500 uppercase" />
+                    <button onclick="applyPromo()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-xs whitespace-nowrap transition">Gunakan</button>
+                </div>
+                <p id="promo-message" class="text-xs mt-1 font-medium hidden"></p>
+                <button onclick="toggleModal('promo-list-modal', true)" class="text-[10px] text-emerald-400 hover:text-emerald-300 text-left mt-1 w-fit flex items-center gap-1 bg-emerald-500/10 px-2 py-1 rounded">
+                    <i class="fa-solid fa-ticket"></i> Lihat Promo Tersedia
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">5</div>
+                <h2 class="text-sm font-bold text-white">Pilih Pembayaran</h2>
+            </div>
+            <!-- Menggunakan padding lebih kecil karena accordion sudah punya margin/padding sendiri -->
+            <div class="p-3" id="payment-container">
+            </div>
+        </section>
+
+        <section class="bg-[#1e293b] rounded-xl border border-slate-800 shadow-sm overflow-hidden mb-6">
+            <div class="bg-slate-800/50 p-3 border-b border-slate-800 flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">6</div>
+                <h2 class="text-sm font-bold text-white">Detail Kontak (Opsional)</h2>
+            </div>
+            <div class="p-4">
+                <input 
+                    type="number" 
+                    id="wa-number"
+                    placeholder="Contoh: 8960xxxx"
+                    class="w-full bg-[#0f172a] border border-slate-700 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 transition"
+                />
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Tombol Live Chat melayang -->
+    <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Danuk%20Store" target="_blank" class="fixed bottom-[85px] right-4 md:right-[calc(50%-220px)] w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(34,197,94,0.5)] z-20 hover:bg-green-600 transition">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- FIXED BOTTOM BAR: Menempel di bawah layar -->
+    <div class="fixed bottom-0 left-[50%] -translate-x-[50%] w-full max-w-[480px] bg-[#1e293b] border-t border-slate-700 p-3 shadow-[0_-15px_30px_-5px_rgba(0,0,0,0.8)] z-50 rounded-t-xl transition-all">
+        <div class="flex items-center justify-between">
+            <div class="pl-1" id="bottom-price-container">
+                <p class="text-[10px] text-slate-400 mb-0.5">Total Harga</p>
+                <p id="mobile-total" class="text-lg font-bold text-emerald-400">Rp 0</p>
+            </div>
+            <button
+                id="btn-checkout-mobile"
+                onclick="handleCheckoutClick()"
+                class="bg-slate-700 text-slate-400 font-bold py-2.5 px-5 rounded-lg text-sm flex items-center gap-2 transition"
+            >
+                Masuk untuk Pesan
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL LIST PROMO -->
+    <div id="promo-list-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[340px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="flex justify-between items-center p-4 border-b border-slate-800 bg-[#0f172a]">
+                <h3 class="font-bold text-base text-white">Promo Tersedia</h3>
+                <button onclick="toggleModal('promo-list-modal', false)" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-4 space-y-3">
+                <!-- Promo 1 -->
+                <div class="bg-[#0f172a] border border-emerald-500/50 rounded-xl p-3 flex justify-between items-center relative overflow-hidden group hover:border-emerald-500 transition-all">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-emerald-500/10 rounded-full blur-xl"></div>
+                    <div class="relative z-10 w-full pr-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">Harga Spesial</span>
+                        </div>
+                        <h4 class="text-white font-bold text-sm tracking-wide">DANUKVIP</h4>
+                        <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Gunakan kode ini untuk mendapatkan harga diskon (harga coret) pada setiap pembelian.</p>
+                    </div>
+                    <button onclick="autoApplyPromo('DANUKVIP')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg text-xs transition relative z-10 shadow-lg shadow-emerald-500/20">
+                        Pakai
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALERT MODALS & OTHERS -->
+    <div id="alert-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[300px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative p-6 text-center">
+            <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-bell text-xl"></i>
+            </div>
+            <h3 class="font-bold text-white mb-2">Informasi</h3>
+            <p id="alert-message" class="text-slate-400 text-xs mb-5"></p>
+            <button onclick="toggleModal('alert-modal', false)" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm transition">OK Mengerti</button>
+        </div>
+    </div>
+
+    <div id="confirm-action-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[300px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative p-6 text-center">
+            <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-right-from-bracket text-xl"></i>
+            </div>
+            <h3 class="font-bold text-white mb-2">Konfirmasi</h3>
+            <p id="confirm-action-message" class="text-slate-400 text-xs mb-5"></p>
+            <div class="flex gap-2">
+                <button onclick="toggleModal('confirm-action-modal', false)" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 rounded-lg text-sm transition">Batal</button>
+                <button id="btn-confirm-action" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm transition">Ya, Keluar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[340px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="flex justify-between items-center p-4 border-b border-slate-800 bg-[#0f172a]">
+                <h3 class="font-bold text-base text-white">Masuk Akun</h3>
+                <button onclick="toggleModal('login-modal', false)" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-5">
+                <div class="mb-4">
+                    <label class="block text-xs text-slate-400 mb-1">Username</label>
+                    <input type="text" id="login-username" placeholder="Masukkan username Anda" class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" />
+                </div>
+                <div class="mb-5">
+                    <label class="block text-xs text-slate-400 mb-1">Password</label>
+                    <input type="password" id="login-password" placeholder="Masukkan password Anda" class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" />
+                </div>
+                
+                <p id="login-error-msg" class="text-red-400 text-xs mb-3 font-medium hidden">
+                    <i class="fa-solid fa-circle-exclamation"></i> Username atau password salah!
+                </p>
+
+                <button onclick="processLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm">
+                    Masuk Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="topup-input-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[340px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="flex justify-between items-center p-4 border-b border-slate-800 bg-[#0f172a]">
+                <h3 class="font-bold text-base text-white">Isi Saldo</h3>
+                <button onclick="toggleModal('topup-input-modal', false)" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-5">
+                <div class="mb-4">
+                    <label class="block text-xs text-slate-400 mb-1">Nominal Top Up (Rp)</label>
+                    <input type="number" id="topup-nominal" placeholder="Contoh: 50000" class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" />
+                </div>
+                <div class="mb-5">
+                    <label class="block text-xs text-slate-400 mb-1">Metode Pembayaran</label>
+                    <select class="w-full bg-[#0f172a] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm appearance-none cursor-not-allowed" disabled>
+                        <option value="qris">QRIS (Otomatis & Gratis Biaya Admin)</option>
+                    </select>
+                </div>
+                <button onclick="lanjutIsiSaldo()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition text-sm">
+                    Lanjut Pembayaran
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="topup-qris-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[320px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="p-6 text-center">
+                <div class="w-14 h-14 bg-yellow-500/10 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3 border border-yellow-500/20">
+                    <i class="fa-solid fa-qrcode text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">Pembayaran QRIS</h3>
+                <p class="text-slate-400 text-xs mb-3">Scan kode QR di bawah ini untuk mengisi saldo:</p>
+                
+                <div class="bg-white p-3 rounded-xl mb-4 w-40 h-40 mx-auto flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS" class="w-full h-full object-contain" />
+                </div>
+
+                <div class="w-full bg-[#0f172a] p-3 rounded-xl mb-5 border border-slate-800">
+                    <p id="topup-qris-total" class="font-bold text-xl text-emerald-400">Rp 0</p>
+                </div>
+
+                <button onclick="selesaiIsiSaldo()" id="btn-topup-bayar" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm transition">
+                    Saya Sudah Membayar
+                </button>
+                <button onclick="toggleModal('topup-qris-modal', false)" class="w-full mt-3 text-slate-400 text-xs font-semibold py-1 hover:text-white transition">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[320px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="p-6 text-center">
+                <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-wallet text-xl"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">Konfirmasi Bayar</h3>
+                <p class="text-slate-400 text-xs mb-4">Bayar menggunakan Saldo Akun sebesar:</p>
+                <p id="confirm-total" class="font-bold text-2xl text-emerald-400 mb-6 border-b border-slate-800 pb-4">Rp 0</p>
+                
+                <div class="flex gap-2">
+                    <button onclick="toggleModal('confirm-modal', false)" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 rounded-lg text-sm transition">
+                        Batal
+                    </button>
+                    <button onclick="confirmSaldoPayment()" id="btn-konfirmasi-saldo" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm transition">
+                        Konfirmasi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="qris-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-[#1e293b] w-full max-w-[320px] rounded-2xl shadow-2xl border border-slate-700 overflow-hidden modal-enter relative">
+            <div class="p-6 text-center">
+                <div class="w-14 h-14 bg-yellow-500/10 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3 border border-yellow-500/20">
+                    <i class="fa-solid fa-qrcode text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-white mb-2">Pembayaran E-Wallet/QRIS</h3>
+                <p class="text-slate-400 text-xs mb-5">Silakan buka aplikasi pembayaran Anda dan selesaikan transaksi sejumlah:</p>
+                
+                <div class="w-full bg-[#0f172a] p-4 rounded-xl mb-6 border border-slate-800">
+                    <p id="qris-total" class="font-bold text-2xl text-emerald-400">Rp 0</p>
+                </div>
+
+                <button onclick="processPayment()" id="btn-pay-qris" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm transition">
+                    Saya Sudah Bayar
+                </button>
+                <button onclick="toggleModal('qris-modal', false)" class="w-full mt-3 text-slate-400 text-xs font-semibold py-1 hover:text-white transition">Batalkan Transaksi</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-[#0b1120] hidden">
+        <div class="bg-[#1e293b] p-6 rounded-2xl w-full max-w-[340px] shadow-2xl border border-slate-700 modal-enter">
+            <div class="text-center mb-5">
+                <i class="fa-solid fa-circle-check text-6xl text-emerald-500 mb-3"></i>
+                <h1 class="text-xl font-bold text-white">Top Up Berhasil!</h1>
+                <p class="text-slate-400 text-xs mt-1">Item akan segera masuk ke akun.</p>
+            </div>
+            
+            <div class="bg-[#0f172a] rounded-xl p-4 mb-5 space-y-3 text-xs border border-slate-800">
+                <div class="flex justify-between"><span class="text-slate-400">ID Player</span><span id="succ-id" class="font-semibold text-white"></span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Item</span><span id="succ-item" class="font-semibold text-white"></span></div>
+                <div class="flex justify-between"><span class="text-slate-400">Metode</span><span id="succ-payment" class="font-semibold text-white"></span></div>
+                <div class="border-t border-slate-700 pt-3 mt-1 flex justify-between">
+                    <span class="text-slate-400">Total Dibayar</span>
+                    <span id="succ-total" class="font-bold text-emerald-400"></span>
+                </div>
+            </div>
+
+            <button onclick="resetApp()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm">
+                Selesai
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const STORE_CONFIG = {
+        name: "DANUK STORE",
+        logoUrl: "https://i.imgur.com/GDSFrlG.png"
+    };
+
+    const state = {
+        user: { isLoggedIn: false, name: '', avatar: '', saldo: 0 },
+        form: { playerId: '', qty: 1, selectedItem: null, selectedPayment: null, waNumber: '' },
+        promo: { code: '', isValid: false },
+        tempTopUp: 0
+    };
+
+    const openPaymentCategories = {
+        'Dompet Digital': true,
+        'Virtual Account': false,
+        'Convenience Store': false
+    };
+
+    function saveState() {
+        localStorage.setItem('danukStoreState', JSON.stringify({
+            user: state.user,
+            form: state.form,
+            promo: state.promo
+        }));
+    }
+
+    function loadState() {
+        const savedState = localStorage.getItem('danukStoreState');
+        if (savedState) {
+            try {
+                const parsed = JSON.parse(savedState);
+                state.user = parsed.user || state.user;
+                state.form = parsed.form || state.form;
+                state.promo = parsed.promo || state.promo;
+
+                if (state.form.playerId) {
+                    const idInput = document.getElementById('player-id');
+                    idInput.value = state.form.playerId;
+                    if (state.form.playerId.length >= 8) {
+                        idInput.classList.add('border-emerald-500', 'focus:border-emerald-500');
+                        document.getElementById('id-success').classList.remove('hidden');
+                    }
+                }
+                
+                if (state.form.qty) {
+                    document.getElementById('qty-input').value = state.form.qty;
+                }
+
+                if (state.form.waNumber) {
+                    document.getElementById('wa-number').value = state.form.waNumber;
+                }
+
+                if (state.promo.code) {
+                    document.getElementById('promo-input').value = state.promo.code;
+                    updatePromoUIMessage();
+                }
+
+            } catch (e) {
+                console.error("Gagal meload state:", e);
+            }
+        }
+    }
+
+    const specialItems = [
+        { id: 'sp1', name: 'Member Mingguan', originalPrice: 30000, promoPrice: 29447 },
+        { id: 'sp2', name: 'BP Card', originalPrice: 45000, promoPrice: 44141 },
+        { id: 'sp3', name: 'Member Bulanan', originalPrice: 90000, promoPrice: 88270 },
+    ];
+
+    const diamondItems = [
+        { id: 'd1', name: '5 Diamonds', originalPrice: 1000, promoPrice: 949 },
+        { id: 'd2', name: '10 Diamonds', originalPrice: 2000, promoPrice: 1897 },
+        { id: 'd3', name: '15 Diamonds', originalPrice: 3000, promoPrice: 2845 },
+        { id: 'd4', name: '20 Diamonds', originalPrice: 4000, promoPrice: 3793 },
+        { id: 'd5', name: '50 Diamonds', originalPrice: 8000, promoPrice: 7581 },
+        { id: 'd6', name: '70 Diamonds', originalPrice: 10000, promoPrice: 9477 },
+        { id: 'd7', name: '100 Diamonds', originalPrice: 16000, promoPrice: 15166 },
+        { id: 'd8', name: '140 Diamonds', originalPrice: 20000, promoPrice: 18953 },
+        { id: 'd9', name: '355 Diamonds', originalPrice: 50000, promoPrice: 47382 },
+        { id: 'd10', name: '720 Diamonds', originalPrice: 100000, promoPrice: 94762 },
+        { id: 'd11', name: '1450 Diamonds', originalPrice: 200000, promoPrice: 187835 },
+        { id: 'd12', name: '7290 Diamonds', originalPrice: 1000000, promoPrice: 955002 }
+    ];
+
+    const formatRp = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
+    
+    function getCurrentPrice(item) {
+        return state.promo.isValid ? item.promoPrice : item.originalPrice;
+    }
+
+    function toggleModal(id, show) {
+        document.getElementById(id).style.display = show ? 'flex' : 'none';
+        if(id === 'login-modal') {
+            document.getElementById('login-error-msg').classList.add('hidden');
+        }
+        if(id === 'topup-input-modal' && !show) {
+            document.getElementById('topup-nominal').value = '';
+        }
+    }
+
+    function customAlert(msg) {
+        document.getElementById('alert-message').innerText = msg;
+        toggleModal('alert-modal', true);
+    }
+
+    let confirmActionCallback = null;
+    function customConfirm(msg, callback) {
+        document.getElementById('confirm-action-message').innerText = msg;
+        confirmActionCallback = callback;
+        toggleModal('confirm-action-modal', true);
+    }
+
+    document.getElementById('btn-confirm-action').addEventListener('click', () => {
+        toggleModal('confirm-action-modal', false);
+        if (confirmActionCallback) confirmActionCallback();
+    });
+
+    const getPaymentCategories = () => {
+        const totalHarga = state.form.selectedItem ? (getCurrentPrice(state.form.selectedItem) * state.form.qty) : 0;
+        const isSaldoNotEnough = state.form.selectedItem && state.user.saldo < totalHarga;
+        
+        let saldoText = `Saldo: ${formatRp(state.user.saldo)}`;
+        if (isSaldoNotEnough) saldoText = `<span class="text-red-500 font-bold">Saldo tidak mencukupi</span>`;
+
+        return [
+            {
+                name: 'Dompet Digital',
+                icon: 'fa-wallet text-blue-400',
+                methods: [
+                    { id: 'saldo', name: 'Saldo Akun', min: saldoText, reqLogin: true, isInsufficient: isSaldoNotEnough },
+                    { id: 'qris', name: 'QRIS (All Payment)', min: 'Min. Rp 100', isBest: true },
+                    { id: 'dana', name: 'DANA', min: 'Min. Rp 1.000' },
+                    { id: 'gopay', name: 'GoPay', min: 'Min. Rp 1.000' },
+                    { id: 'ovo', name: 'OVO', min: 'Min. Rp 1.000' },
+                    { id: 'shopeepay', name: 'ShopeePay', min: 'Min. Rp 1.000' },
+                    { id: 'linkaja', name: 'LinkAja', min: 'Min. Rp 1.000' }
+                ]
+            },
+            {
+                name: 'Virtual Account',
+                icon: 'fa-building-columns text-indigo-400',
+                methods: [
+                    { id: 'bca', name: 'BCA Virtual Account', min: 'Min. Rp 10.000' },
+                    { id: 'bni', name: 'BNI Virtual Account', min: 'Min. Rp 10.000' },
+                    { id: 'bri', name: 'BRI Virtual Account', min: 'Min. Rp 10.000' },
+                    { id: 'mandiri', name: 'Mandiri Virtual Account', min: 'Min. Rp 10.000' },
+                    { id: 'permata', name: 'Permata Virtual Account', min: 'Min. Rp 10.000' },
+                    { id: 'cimb', name: 'CIMB Niaga Virtual Account', min: 'Min. Rp 10.000' }
+                ]
+            },
+            {
+                name: 'Convenience Store',
+                icon: 'fa-store text-orange-400',
+                methods: [
+                    { id: 'alfamart', name: 'Alfamart', min: 'Min. Rp 10.000' },
+                    { id: 'indomaret', name: 'Indomaret', min: 'Min. Rp 10.000' }
+                ]
+            }
+        ];
+    };
+
+    function renderNavbar() {
+        const navBar = document.getElementById('main-navbar');
+        
+        if (state.user.isLoggedIn) {
+            const btnTopUpHtml = `<button onclick="toggleModal('topup-input-modal', true)" class="ml-2 text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/30 hover:bg-emerald-500/40 transition">Isi Saldo</button>`;
+
+            navBar.innerHTML = `
+                <div class="flex justify-between items-center px-4 h-14">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-full border border-blue-500 overflow-hidden shadow-lg bg-slate-800 flex-shrink-0">
+                            <img src="${state.user.avatar}" alt="User" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[11px] font-bold text-white leading-tight">${state.user.name}</span>
+                            <div class="flex items-center">
+                                <span class="text-[10px] font-medium text-emerald-400">${formatRp(state.user.saldo)}</span>
+                                ${btnTopUpHtml}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="processLogout()" class="text-red-400 hover:text-red-300 transition p-1 bg-red-500/10 rounded-md border border-red-500/20" title="Keluar">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-6 h-6 rounded-md flex items-center justify-center shadow-lg overflow-hidden">
+                                <img src="${STORE_CONFIG.logoUrl}" alt="Logo" class="w-full h-full object-cover">
+                            </div>
+                            <span class="text-[10px] font-black italic tracking-wider text-white hidden sm:block">${STORE_CONFIG.name}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            navBar.innerHTML = `
+                <div class="flex justify-between items-center px-4 h-14">
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-7 h-7 rounded-md flex items-center justify-center shadow-lg overflow-hidden">
+                            <img src="${STORE_CONFIG.logoUrl}" alt="Logo" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-sm font-black italic tracking-wide text-white">${STORE_CONFIG.name}</span>
+                    </div>
+                    <button onclick="toggleModal('login-modal', true)" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-md font-semibold text-xs transition shadow-lg shadow-blue-500/20">
+                        Masuk
+                    </button>
+                </div>
+            `;
+        }
+        
+        renderPayments(); 
+        updateBottomBar();
+    }
+
+    function lanjutIsiSaldo() {
+        const nominalStr = document.getElementById('topup-nominal').value;
+        const nominal = parseInt(nominalStr);
+
+        if (!nominalStr || isNaN(nominal) || nominal < 100) {
+            customAlert("Masukkan nominal yang valid (Minimal Rp 100)");
+            return;
+        }
+
+        state.tempTopUp = nominal;
+        document.getElementById('topup-qris-total').innerText = formatRp(nominal);
+        
+        toggleModal('topup-input-modal', false);
+        toggleModal('topup-qris-modal', true);
+    }
+
+    function selesaiIsiSaldo() {
+        const btn = document.getElementById('btn-topup-bayar');
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Memproses...`;
+
+        setTimeout(() => {
+            state.user.saldo += state.tempTopUp;
+            state.tempTopUp = 0;
+            saveState(); 
+            
+            toggleModal('topup-qris-modal', false);
+            btn.innerHTML = `Saya Sudah Membayar`;
+            
+            customAlert("Pembayaran Terverifikasi! Saldo Anda telah ditambahkan.");
+            renderNavbar(); 
+        }, 1500);
+    }
+
+    function renderItems() {
+        const spContainer = document.getElementById('special-items-container');
+        const dmContainer = document.getElementById('diamond-items-container');
+        
+        const createHtml = (item) => {
+            const isActive = state.form.selectedItem?.id === item.id;
+            const activeClass = isActive ? 'active-item' : 'border-slate-700 bg-[#0f172a] hover:border-blue-500/50';
+            
+            // Harga normal tanpa diskon (Jika promo BELUM digunakan)
+            let priceDisplay = `<div class="text-[12px] text-blue-400 font-bold">${formatRp(item.originalPrice)}</div>`;
+            
+            // Tampilan Harga Coret (Jika promo SUDAH digunakan)
+            if (state.promo.isValid) {
+                priceDisplay = `
+                    <div class="text-[10px] text-red-500 line-through font-medium mb-0.5">${formatRp(item.originalPrice)}</div>
+                    <div class="text-[12px] text-emerald-400 font-bold">${formatRp(item.promoPrice)}</div>
+                `;
+            }
+
+            return `
+                <button onclick="selectItem('${item.id}')" class="text-left p-2.5 rounded-xl border-2 transition-all flex flex-col justify-center min-h-[60px] ${activeClass}">
+                    <div class="font-semibold text-xs text-white mb-1 line-clamp-1">${item.name}</div>
+                    ${priceDisplay}
+                </button>
+            `;
+        };
+
+        spContainer.innerHTML = specialItems.map(createHtml).join('');
+        dmContainer.innerHTML = diamondItems.map(createHtml).join('');
+    }
+
+    window.toggleCategory = function(catName) {
+        openPaymentCategories[catName] = !openPaymentCategories[catName];
+        renderPayments();
+    }
+
+    function renderPayments() {
+        const container = document.getElementById('payment-container');
+        if (!state.user.isLoggedIn) {
+            container.innerHTML = `
+                <div class="text-center py-8 bg-[#0f172a] rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-lock text-slate-500 text-3xl mb-3"></i>
+                    <p class="text-xs text-slate-400">Silakan login untuk melihat metode pembayaran.</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        getPaymentCategories().forEach(cat => {
+            const isOpen = openPaymentCategories[cat.name];
+            
+            html += `
+                <div class="bg-[#0f172a] rounded-xl border border-slate-700 overflow-hidden mb-2.5 transition-all">
+                    <button onclick="toggleCategory('${cat.name}')" class="w-full p-3.5 flex items-center justify-between bg-slate-800/40 hover:bg-slate-800/80 transition-colors">
+                        <h3 class="text-xs font-semibold text-white flex items-center gap-2">
+                            <i class="fa-solid ${cat.icon} w-4 text-center"></i> ${cat.name}
+                        </h3>
+                        <i class="fa-solid fa-chevron-${isOpen ? 'up' : 'down'} text-slate-400 text-xs transition-transform"></i>
+                    </button>
+                    
+                    <div class="${isOpen ? 'block' : 'hidden'} p-2 grid grid-cols-1 gap-2 border-t border-slate-700/50">
+            `;
+            
+            cat.methods.forEach(method => {
+                const isActive = state.form.selectedPayment?.id === method.id;
+                let activeClass = isActive ? 'active-payment' : 'border-slate-700 bg-slate-800/20';
+                if (method.id === 'saldo' && method.isInsufficient) {
+                    activeClass = 'border-slate-700 bg-slate-800/20 opacity-60'; 
+                }
+
+                const bestBadge = method.isBest ? `<span class="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">Best Price</span>` : '';
+                let priceTag = '';
+                if (state.form.selectedItem && !method.isInsufficient) {
+                    const total = getCurrentPrice(state.form.selectedItem) * state.form.qty;
+                    priceTag = `<div class="text-emerald-400 font-bold text-xs mt-1">${formatRp(total)}</div>`;
+                }
+
+                html += `
+                    <button onclick="selectPayment('${method.id}')" class="text-left p-3 rounded-xl border transition-all relative flex justify-between items-center ${activeClass}">
+                        <div>
+                            <div class="font-semibold text-sm text-white">${method.name}</div>
+                            <div class="text-[10px] text-slate-400 mt-0.5">${method.min}</div>
+                        </div>
+                        <div class="text-right">
+                            ${bestBadge}
+                            ${priceTag}
+                        </div>
+                    </button>
+                `;
+            });
+            html += `</div></div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    function autoApplyPromo(code) {
+        document.getElementById('promo-input').value = code;
+        applyPromo();
+        toggleModal('promo-list-modal', false);
+    }
+
+    function updatePromoUIMessage() {
+        const msgContainer = document.getElementById('promo-message');
+        msgContainer.classList.remove('hidden', 'text-emerald-400', 'text-red-400');
+        
+        if(state.promo.isValid) {
+            msgContainer.classList.add('text-emerald-400');
+            msgContainer.innerHTML = '<i class="fa-solid fa-circle-check"></i> Kode promo berhasil digunakan! Harga diskon aktif.';
+        } else {
+            msgContainer.classList.add('text-red-400');
+            msgContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Kode promo tidak valid atau kadaluarsa!';
+        }
+    }
+
+    function applyPromo() {
+        const promoInput = document.getElementById('promo-input').value.trim().toUpperCase();
+        const msgContainer = document.getElementById('promo-message');
+        
+        if(promoInput === '') {
+            msgContainer.classList.add('hidden');
+            state.promo = { code: '', isValid: false }; 
+            saveState();
+            renderItems();
+            renderPayments();
+            updateBottomBar();
+            return;
+        }
+
+        state.promo.code = promoInput;
+
+        if(promoInput === 'DANUKVIP') {
+            state.promo.isValid = true;
+        } else {
+            state.promo.isValid = false;
+        }
+        
+        updatePromoUIMessage();
+        saveState(); 
+
+        renderItems();
+        renderPayments();
+        updateBottomBar();
+    }
+
+    function selectItem(itemId) {
+        const item = [...specialItems, ...diamondItems].find(i => i.id === itemId);
+        state.form.selectedItem = item;
+        
+        if (state.form.selectedPayment?.id === 'saldo') {
+            const total = getCurrentPrice(item) * state.form.qty;
+            if (state.user.saldo < total) state.form.selectedPayment = null; 
+        }
+        saveState(); 
+        renderItems();
+        renderPayments();
+        updateBottomBar();
+    }
+
+    function selectPayment(payId) {
+        let payment = null;
+        getPaymentCategories().forEach(cat => {
+            const found = cat.methods.find(m => m.id === payId);
+            if (found) payment = found;
+        });
+
+        if (payment && payment.id === 'saldo' && payment.isInsufficient) return;
+
+        state.form.selectedPayment = payment;
+        saveState(); 
+        renderPayments();
+        updateBottomBar();
+    }
+
+    function changeQty(amount) {
+        let newQty = state.form.qty + amount;
+        if (newQty < 1) newQty = 1;
+        state.form.qty = newQty;
+        document.getElementById('qty-input').value = newQty;
+        
+        if (state.form.selectedItem && state.form.selectedPayment?.id === 'saldo') {
+            const total = getCurrentPrice(state.form.selectedItem) * newQty;
+            if (state.user.saldo < total) state.form.selectedPayment = null;
+        }
+
+        saveState(); 
+        renderPayments();
+        updateBottomBar();
+    }
+
+    document.getElementById('player-id').addEventListener('input', (e) => {
+        const val = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = val;
+        state.form.playerId = val;
+        
+        const err = document.getElementById('id-error');
+        const succ = document.getElementById('id-success');
+        
+        if (val.length === 0) {
+            e.target.classList.remove('border-red-500', 'border-emerald-500');
+            err.classList.add('hidden');
+            succ.classList.add('hidden');
+        } else if (val.length < 8) {
+            e.target.classList.remove('border-emerald-500');
+            e.target.classList.add('border-red-500', 'focus:border-red-500');
+            err.classList.remove('hidden');
+            succ.classList.add('hidden');
+        } else {
+            e.target.classList.remove('border-red-500', 'focus:border-red-500');
+            e.target.classList.add('border-emerald-500', 'focus:border-emerald-500');
+            err.classList.add('hidden');
+            succ.classList.remove('hidden');
+        }
+        
+        saveState(); 
+        updateBottomBar();
+    });
+
+    document.getElementById('wa-number').addEventListener('input', (e) => {
+        state.form.waNumber = e.target.value;
+        saveState(); 
+    });
+
+    function updateBottomBar() {
+        const item = state.form.selectedItem;
+        const totalHarga = item ? (getCurrentPrice(item) * state.form.qty) : 0;
+        
+        let priceHtml = `
+            <p class="text-[10px] text-slate-400 mb-0.5">Total Harga</p>
+            <p id="mobile-total" class="text-base font-bold text-emerald-400">${formatRp(totalHarga)}</p>
+        `;
+
+        if (state.promo.isValid && item) {
+            const originalTotal = item.originalPrice * state.form.qty;
+            priceHtml = `
+                <p class="text-[10px] text-slate-400 mb-0.5">Total Harga <span class="bg-emerald-500/20 text-emerald-400 text-[8px] px-1 ml-1 rounded">PROMO</span></p>
+                <div class="flex items-end gap-1.5 leading-none mt-1">
+                    <p class="text-[10px] text-red-400 line-through decoration-red-500/70">${formatRp(originalTotal)}</p>
+                    <p id="mobile-total" class="text-base font-bold text-emerald-400">${formatRp(totalHarga)}</p>
+                </div>
+            `;
+        }
+        
+        document.getElementById('bottom-price-container').innerHTML = priceHtml;
+
+        const btnMob = document.getElementById('btn-checkout-mobile');
+        
+        if (!state.user.isLoggedIn) {
+            btnMob.innerHTML = `<i class="fa-solid fa-lock text-xs"></i> Masuk untuk Pesan`;
+            btnMob.className = "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-lg text-xs flex items-center gap-1.5 transition shadow-lg shadow-blue-500/20";
+            return;
+        }
+
+        const isIdValid = state.form.playerId.length >= 8;
+        const isValid = isIdValid && state.form.selectedItem && state.form.selectedPayment;
+
+        if (isValid) {
+            btnMob.innerHTML = `Pesan Sekarang <i class="fa-solid fa-chevron-right text-[10px]"></i>`;
+            btnMob.className = "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-lg text-xs flex items-center gap-1.5 transition shadow-lg shadow-blue-500/30";
+        } else {
+            btnMob.innerHTML = `Pesan Sekarang`;
+            btnMob.className = "bg-slate-700 text-slate-400 font-bold py-2.5 px-5 rounded-lg text-xs flex items-center transition cursor-not-allowed";
+        }
+    }
+
+    function processLogin() {
+        const user = document.getElementById('login-username').value;
+        const pass = document.getElementById('login-password').value;
+        const errMsg = document.getElementById('login-error-msg');
+
+        if (user === 'DanukVIP' && pass === 'Dnkprmdi2006') {
+            errMsg.classList.add('hidden');
+            state.user = {
+                isLoggedIn: true,
+                name: user,
+                saldo: 0, 
+                avatar: `https://i.imgur.com/3st9TOm.jpeg`
+            };
+            saveState(); 
+            toggleModal('login-modal', false);
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            renderNavbar(); 
+        } else {
+            errMsg.classList.remove('hidden');
+        }
+    }
+
+    function processLogout() {
+        customConfirm("Apakah Anda yakin ingin keluar dari akun?", () => {
+            state.user = { isLoggedIn: false, name: '', avatar: '', saldo: 0 };
+            
+            state.form.selectedPayment = null; 
+            state.promo = { code: '', isValid: false }; 
+            
+            document.getElementById('promo-input').value = '';
+            document.getElementById('promo-message').classList.add('hidden');
+            
+            saveState(); 
+            renderNavbar();
+            renderPayments();
+            updateBottomBar();
+        });
+    }
+
+    function handleCheckoutClick() {
+        if (!state.user.isLoggedIn) {
+            toggleModal('login-modal', true);
+            return;
+        }
+
+        const { playerId, selectedItem, selectedPayment, qty } = state.form;
+        
+        if (!playerId || playerId.length < 8) return customAlert("Masukkan ID yang valid (Minimal 8 angka)!");
+        if (!selectedItem) return customAlert("Pilih nominal diamond terlebih dahulu!");
+        if (!selectedPayment) return customAlert("Pilih metode pembayaran terlebih dahulu!");
+        
+        const total = getCurrentPrice(selectedItem) * qty;
+
+        if (selectedPayment.id === 'saldo') {
+            if (state.user.saldo < total) return customAlert("Saldo akun tidak mencukupi!");
+            document.getElementById('confirm-total').innerText = formatRp(total);
+            toggleModal('confirm-modal', true);
+        } else {
+            document.getElementById('qris-total').innerText = formatRp(total);
+            toggleModal('qris-modal', true);
+        }
+    }
+
+    function confirmSaldoPayment() {
+        const btn = document.getElementById('btn-konfirmasi-saldo');
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Proses...`;
+        
+        setTimeout(() => {
+            toggleModal('confirm-modal', false);
+            btn.innerHTML = `Konfirmasi`;
+            processPayment();
+        }, 800);
+    }
+
+    function processPayment() {
+        const { playerId, selectedItem, selectedPayment, qty } = state.form;
+        const total = getCurrentPrice(selectedItem) * qty;
+        
+        const btnQris = document.getElementById('btn-pay-qris');
+        if(btnQris && selectedPayment.id !== 'saldo') {
+            btnQris.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Memproses...`;
+        }
+
+        setTimeout(() => {
+            if (selectedPayment.id === 'saldo') {
+                state.user.saldo -= total;
+                renderNavbar();
+            }
+            saveState(); 
+
+            toggleModal('qris-modal', false);
+            if(btnQris) btnQris.innerHTML = `Saya Sudah Bayar`;
+
+            document.getElementById('succ-id').innerText = playerId;
+            document.getElementById('succ-item').innerText = `${selectedItem.name} x${qty}`;
+            document.getElementById('succ-payment').innerText = selectedPayment.name;
+            document.getElementById('succ-total').innerText = formatRp(total);
+            
+            toggleModal('success-modal', true);
+        }, 1200);
+    }
+
+    function resetApp() {
+        state.form.playerId = '';
+        state.form.qty = 1;
+        state.form.selectedItem = null;
+        state.form.selectedPayment = null;
+        state.form.waNumber = ''; 
+        state.promo = { code: '', isValid: false }; 
+        
+        document.getElementById('player-id').value = '';
+        document.getElementById('wa-number').value = '';
+        document.getElementById('qty-input').value = '1';
+        document.getElementById('promo-input').value = '';
+        document.getElementById('promo-message').classList.add('hidden');
+        
+        const idInput = document.getElementById('player-id');
+        idInput.classList.remove('border-red-500', 'border-emerald-500', 'focus:border-red-500', 'focus:border-emerald-500');
+        document.getElementById('id-error').classList.add('hidden');
+        document.getElementById('id-success').classList.add('hidden');
+        
+        saveState(); 
+        renderItems();
+        renderPayments();
+        updateBottomBar();
+        toggleModal('success-modal', false);
+    }
+
+    window.onload = () => {
+        loadState(); 
+        renderNavbar();
+        renderItems();
+        updateBottomBar();
+    };
+
+</script>
+</body>
+</html>

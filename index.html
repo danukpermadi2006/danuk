@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danuk Terminal | Link Hub</title>
+    
+    <!-- Google Fonts: Rajdhani & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        gaming: ['"Rajdhani"', 'sans-serif'],
+                        ui: ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkbg: '#050508',
+                        neon: {
+                            cyan: '#00f3ff',
+                            pink: '#ff007c',
+                            purple: '#b026ff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050508; 
+            color: #e2e8f0; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.1), transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(255, 0, 124, 0.1), transparent 40%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Avatar Glow */
+        .avatar-glow { position: relative; display: inline-block; }
+        .avatar-glow::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            background: linear-gradient(45deg, #00f3ff, #ff007c, #b026ff, #00f3ff);
+            background-size: 400%; z-index: -1; animation: gradientBG 6s ease infinite;
+            filter: blur(8px); opacity: 0.8;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Hub Cards */
+        .hub-card {
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.6) 0%, rgba(10, 10, 15, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+
+        .hub-card::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg); transition: all 0.5s;
+        }
+
+        .hub-card:hover { transform: translateY(-5px) scale(1.02); }
+        .hub-card:hover::after { left: 200%; }
+
+        /* Specific Card Borders */
+        .card-streamer { border-left: 3px solid #00f3ff; }
+        .card-streamer:hover { box-shadow: 0 10px 30px rgba(0, 243, 255, 0.15); border-color: #00f3ff; }
+        
+        .card-mabar { border-left: 3px solid #b026ff; }
+        .card-mabar:hover { box-shadow: 0 10px 30px rgba(176, 38, 255, 0.15); border-color: #b026ff; }
+        
+        .card-topup { border-left: 3px solid #ff007c; }
+        .card-topup:hover { box-shadow: 0 10px 30px rgba(255, 0, 124, 0.15); border-color: #ff007c; }
+
+        .icon-box { transition: all 0.3s ease; }
+        .hub-card:hover .icon-box { transform: scale(1.1) rotate(5deg); }
+
+        .fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center py-10 px-4">
+
+    <!-- Efek Partikel Latar Belakang Sederhana -->
+    <div class="fixed inset-0 pointer-events-none z-[-1] opacity-30" id="particles"></div>
+
+    <main class="w-full max-w-[400px] flex flex-col items-center z-10 fade-up">
+        
+        <!-- HEADER / PROFIL -->
+        <div class="avatar-glow mb-6">
+            <img src="https://i.ibb.co/dJtR01Mw/Background-Eraser-20260403-053012503.png" 
+                 alt="Danuk Logo" 
+                 class="w-28 h-28 rounded-full border-2 border-slate-700 object-cover bg-[#0a0a0f]">
+        </div>
+
+        <h1 class="text-3xl font-gaming font-bold tracking-wider text-white text-center mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+            DANUK NETWORK
+        </h1>
+        <p class="font-ui text-sm text-gray-400 mb-8 text-center flex items-center justify-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> System Online
+        </p>
+
+        <!-- MENU LINK HUB -->
+        <div class="w-full flex flex-col gap-4">
+            
+            <!-- Link 1: Streamer Profile -->
+            <a href="streamer.html" class="hub-card card-streamer group">
+                <div class="w-12 h-12 rounded-lg bg-[rgba(0,243,255,0.1)] flex items-center justify-center text-neon-cyan icon-box mr-4">
+                    <i class="fa-solid fa-headset text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h2 class="font-gaming font-bold text-lg text-white tracking-wide group-hover:text-neon-cyan transition-colors">Streamer Profile</h2>
+                    <p class="font-ui text-xs text-gray-400">Profil, Sosmed & Donasi</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-neon-cyan transition-colors"></i>
+            </a>
+
+            <!-- Link 2: Data Mabar -->
+            <a href="mabar.html" class="hub-card card-mabar group" style="animation-delay: 0.1s;">
+                <div class="w-12 h-12 rounded-lg bg-[rgba(176,38,255,0.1)] flex items-center justify-center text-neon-purple icon-box mr-4">
+                    <i class="fa-solid fa-gamepad text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h2 class="font-gaming font-bold text-lg text-white tracking-wide group-hover:text-neon-purple transition-colors">Open Mabar</h2>
+                    <p class="font-ui text-xs text-gray-400">Live Antrean & Timer</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-neon-purple transition-colors"></i>
+            </a>
+
+            <!-- Link 3: Top Up Store -->
+            <a href="topup.html" class="hub-card card-topup group" style="animation-delay: 0.2s;">
+                <div class="w-12 h-12 rounded-lg bg-[rgba(255,0,124,0.1)] flex items-center justify-center text-neon-pink icon-box mr-4">
+                    <i class="fa-solid fa-store text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h2 class="font-gaming font-bold text-lg text-white tracking-wide group-hover:text-neon-pink transition-colors">Danuk Store</h2>
+                    <p class="font-ui text-xs text-gray-400">Top Up Diamond FF</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-neon-pink transition-colors"></i>
+            </a>
+
+        </div>
+
+        <!-- SOCIAL MEDIA ICONS -->
+        <div class="flex gap-6 mt-10 text-xl fade-up" style="animation-delay: 0.4s;">
+            <a href="https://www.instagram.com/danukpermadi2006?igsh=MTF3ZDV0NWI0MjZ5ZQ==" target="_blank" class="text-gray-500 hover:text-white hover:drop-shadow-[0_0_8px_#fff] transition-all"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://youtube.com/@danukmobilador?si=hr6HUZOhXSvO05tm" target="_blank" class="text-gray-500 hover:text-[#ff0000] hover:drop-shadow-[0_0_8px_#ff0000] transition-all"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@danukmobilador?_r=1&_t=ZS-95fwARt03QW" target="_blank" class="text-gray-500 hover:text-[#00f2fe] hover:drop-shadow-[0_0_8px_#00f2fe] transition-all"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 text-center fade-up" style="animation-delay: 0.5s;">
+            <p class="text-[10px] font-gaming font-bold uppercase tracking-[0.2em] text-gray-500">
+                SYSTEM.ROOT // 2026<br>ALL RIGHTS RESERVED
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Efek bintang/partikel simpel
+        const particles = document.getElementById('particles');
+        for(let i=0; i<30; i++) {
+            let div = document.createElement('div');
+            div.style.position = 'absolute';
+            div.style.width = Math.random() * 3 + 'px';
+            div.style.height = div.style.width;
+            div.style.background = Math.random() > 0.5 ? '#00f3ff' : '#ff007c';
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            div.style.borderRadius = '50%';
+            div.style.opacity = Math.random() * 0.5 + 0.2;
+            div.style.animation = `fadeUp ${Math.random() * 3 + 2}s infinite alternate ease-in-out`;
+            particles.appendChild(div);
+        }
+    </script>
+</body>
+</html>
