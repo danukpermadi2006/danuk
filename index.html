@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Hub</title>
+    <meta name="description" content="My Personal Internet Homepage and Dashboard">
+    
+    <!-- PWA Manifest Link -->
+    <link id="manifest-link" rel="manifest" href="">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#f59e0b', // Amber 500
+                        accent: '#facc15',  // Yellow 400
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome & Google Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        /* =======================================================
+           TEMA AMBER/YELLOW CYBER GLASS
+           ======================================================= */
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #050505; /* Hitam pekat */
+            background-image: 
+                radial-gradient(circle at 15% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 25%),
+                radial-gradient(circle at 85% 100%, rgba(250, 204, 21, 0.12) 0%, transparent 25%);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(10, 10, 10, 0.9));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(245, 158, 11, 0.4); /* Amber border on hover */
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.8), 0 0 15px -3px rgba(245, 158, 11, 0.2);
+            background: linear-gradient(145deg, rgba(30, 25, 15, 0.9), rgba(15, 15, 15, 0.95));
+        }
+
+        .input-dark {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            color: #f8fafc;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .input-dark:hover, .input-dark:focus {
+            border-color: #f59e0b;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .input-dark:focus {
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2), inset 0 2px 4px rgba(0,0,0,0.5);
+            outline: none;
+        }
+
+        /* Buttons & Animations */
+        .btn-action {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-action::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+        }
+        .btn-action:hover:not(:disabled)::after { animation: shine 1.5s infinite; }
+        
+        /* Tema Tombol Kuning/Amber */
+        .btn-upload { 
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); 
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); 
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3); 
+        }
+        .btn-upload:hover { 
+            box-shadow: 0 6px 30px rgba(245, 158, 11, 0.5); 
+            transform: translateY(-2px); 
+        }
+
+        @keyframes shine { 100% { left: 200%; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 100; display: flex; justify-content: center; align-items: flex-start;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding-top: 5rem;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            transform: scale(0.95) translateY(-20px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 1px solid #000; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #f59e0b; }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="antialiased p-4 md:p-8 flex justify-center items-start">
+    
+    <!-- 
+    ======================================================================
+    JAVASCRIPT: DATA KONFIGURASI UTAMA
+    ======================================================================
+    -->
+    <script>
+        const DATA = {
+            // 1. PROFIL PRIBADI
+            profil: {
+                nama: "Rizky Workspace",
+                tagline: "Developer & Creator",
+                bio: "Welcome to my digital workspace. All my projects and tools in one place.",
+                foto: "https://i.imgur.com/GDSFrlG.png", // Ganti URL foto Anda
+                lokasi: "Surakarta, ID",
+                email: "hello@example.com"
+            },
+
+            // 2. SOSIAL MEDIA
+            sosialMedia: [
+                { nama: "GitHub", url: "https://github.com", icon: "fab fa-github" },
+                { nama: "LinkedIn", url: "https://linkedin.com", icon: "fab fa-linkedin-in" },
+                { nama: "Twitter", url: "https://twitter.com", icon: "fab fa-twitter" },
+                { nama: "Instagram", url: "https://instagram.com", icon: "fab fa-instagram" }
+            ],
+
+            // 3. WIDGETS & SETTINGS
+            pengaturan: {
+                weatherCity: "Surakarta",
+                showQuotes: true
+            },
+
+            // 4. QUOTES
+            quotes: [
+                "Talk is cheap. Show me the code. – Linus Torvalds",
+                "First, solve the problem. Then, write the code. – John Johnson",
+                "Make it work, make it right, make it fast. – Kent Beck"
+            ],
+
+            // 5. PROJECTS / TOOLS (Sekarang 4 Project)
+            projects: [
+                { 
+                    nama: "GitHub Manager", 
+                    url: "https://github.com", 
+                    icon: "fas fa-cloud-upload-alt", 
+                    deskripsi: "Instant Upload & Repository Manager directly from your browser.", 
+                    tag: "App" 
+                },
+                { 
+                    nama: "TikTok Downloader", 
+                    url: "https://example.com", 
+                    icon: "fas fa-video", 
+                    deskripsi: "Unduh video TikTok tanpa watermark dengan cepat dan mudah.", 
+                    tag: "Web" 
+                },
+                { 
+                    nama: "QR Generator", 
+                    url: "https://example.com", 
+                    icon: "fas fa-qrcode", 
+                    deskripsi: "Buat QR Code custom dengan logo, warna, dan desain unik.", 
+                    tag: "Utility" 
+                },
+                { 
+                    nama: "Image Compressor", 
+                    url: "https://example.com", 
+                    icon: "fas fa-compress-image", 
+                    deskripsi: "Kompres dan optimalkan ukuran gambar tanpa mengurangi kualitas.", 
+                    tag: "Tool" 
+                }
+            ]
+        };
+    </script>
+
+    <!-- ======================================================================
+    STRUKTUR HTML (UI)
+    ====================================================================== -->
+    <div class="w-full max-w-3xl flex flex-col gap-6 relative z-10 mx-auto pb-12">
+        
+        <!-- Navbar -->
+        <nav class="glass-panel rounded-2xl px-5 py-4 animate-fade-in flex justify-between items-center z-20 sticky top-4">
+            <div class="flex items-center gap-3 font-bold text-lg text-white">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <span class="tracking-tight hidden sm:block">Personal<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Hub</span></span>
+            </div>
+            
+            <!-- Global Search Trigger -->
+            <button onclick="toggleSearch()" class="flex-1 max-w-sm mx-4 input-dark px-4 py-2.5 rounded-xl flex items-center justify-between transition-all group">
+                <div class="flex items-center gap-2 text-slate-400 group-hover:text-amber-400">
+                    <i class="fas fa-search text-sm"></i>
+                    <span class="text-xs md:text-sm font-mono">Search projects...</span>
+                </div>
+                <div class="hidden sm:flex gap-1">
+                    <kbd class="bg-black/50 border border-slate-700 rounded px-1.5 py-0.5 text-[10px] mono text-slate-400">Ctrl+K</kbd>
+                </div>
+            </button>
+
+            <!-- Share Button -->
+            <button onclick="showShareModal()" class="w-10 h-10 rounded-xl bg-black/30 border border-white/5 hover:border-amber-500/50 hover:bg-amber-500/10 text-slate-300 hover:text-amber-400 transition-all flex items-center justify-center" aria-label="Share Hub">
+                <i class="fas fa-share-nodes text-base"></i>
+            </button>
+        </nav>
+
+        <!-- Profile & Dashboard Panel (Merged) -->
+        <div class="glass-panel rounded-2xl p-6 md:p-8 text-center relative overflow-hidden group animate-fade-in" style="animation-delay: 100ms;">
+            <!-- Top border glow (Amber) -->
+            <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-80 pointer-events-none"></div>
+            <!-- Background Icon -->
+            <i class="fas fa-fingerprint absolute -right-6 -bottom-6 text-9xl text-white/[0.02] transform -rotate-12 pointer-events-none"></i>
+            
+            <div class="relative z-10 flex flex-col items-center mt-2">
+                
+                <!-- Glowing Avatar -->
+                <div class="relative mb-5 group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-yellow-400 to-amber-600 rounded-full blur-[15px] opacity-50 animate-pulse"></div>
+                    <img id="profile-img" src="" alt="Profile" class="relative w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-black object-cover z-10 bg-slate-900 shadow-xl">
+                    <div class="absolute bottom-1 md:bottom-2 right-1 md:right-2 w-5 h-5 bg-emerald-500 border-2 border-black rounded-full z-20 shadow-[0_0_10px_rgba(16,185,129,0.8)]" title="Online"></div>
+                </div>
+                
+                <!-- Name & Bio -->
+                <h1 id="profile-name" class="text-3xl font-extrabold tracking-tight text-white mb-1"></h1>
+                <p id="profile-tagline" class="text-xs md:text-sm font-bold text-gradient uppercase tracking-widest mb-4"></p>
+                <p id="profile-bio" class="text-sm text-slate-400 mb-8 leading-relaxed max-w-lg mx-auto"></p>
+
+                <!-- Dashboard Widgets (Clock, Date, Location) -->
+                <div class="w-full max-w-2xl bg-black/40 border border-white/5 rounded-2xl p-4 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 divide-x-0 sm:divide-x divide-white/5 shadow-inner relative overflow-hidden mx-auto">
+                    <!-- Left Accent Line -->
+                    <div class="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-yellow-400 to-amber-600"></div>
+                    
+                    <!-- Clock -->
+                    <div class="flex flex-col items-center justify-center sm:px-4">
+                        <i class="fas fa-clock text-amber-400 mb-2 text-sm md:text-base"></i>
+                        <span id="clock-time" class="text-2xl font-extrabold mono text-white tracking-tight leading-none">00:00</span>
+                    </div>
+                    
+                    <!-- Date -->
+                    <div class="flex flex-col items-center justify-center sm:px-4">
+                        <i class="fas fa-calendar-alt text-yellow-400 mb-2 text-sm md:text-base"></i>
+                        <span id="clock-date" class="text-[11px] md:text-xs font-bold text-slate-300 uppercase tracking-wider text-center leading-tight">Memuat...</span>
+                    </div>
+                    
+                    <!-- Location -->
+                    <div class="flex flex-col items-center justify-center sm:px-4 mt-2 sm:mt-0">
+                        <i class="fas fa-map-marker-alt text-orange-400 mb-2 text-sm md:text-base"></i>
+                        <span id="profile-location" class="text-[11px] md:text-xs font-bold text-slate-300 uppercase tracking-wider text-center leading-tight"></span>
+                    </div>
+
+                    <!-- Greeting -->
+                    <div class="flex flex-col items-center justify-center sm:px-4 mt-2 sm:mt-0">
+                        <i class="fas fa-sparkles text-amber-300 mb-2 text-sm md:text-base"></i>
+                        <span id="greeting-text" class="text-[11px] md:text-xs font-bold text-slate-300 uppercase tracking-wider text-center leading-tight">Welcome!</span>
+                    </div>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto justify-center">
+                    <div id="social-container" class="flex justify-center gap-3"></div>
+                    
+                    <div class="hidden sm:block w-px h-8 bg-white/10 mx-2"></div>
+                    
+                    <button onclick="copyEmail()" class="w-full sm:w-auto btn-action btn-upload text-white py-3 px-6 rounded-xl text-xs md:text-sm font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-envelope"></i> Copy Email
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote Card -->
+        <div id="quote-container" class="glass-panel border-l-4 border-l-amber-500 p-5 rounded-2xl relative overflow-hidden animate-fade-in" style="animation-delay: 200ms;">
+            <i class="fas fa-quote-left absolute top-3 right-4 text-white/5 text-4xl"></i>
+            <p id="quote-text" class="text-xs md:text-sm italic text-slate-300 relative z-10 leading-relaxed mono text-center sm:text-left"></p>
+        </div>
+
+        <!-- My Projects Section (4 Items in 2x2 Grid) -->
+        <main class="flex flex-col gap-5 animate-fade-in" style="animation-delay: 300ms;">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+                <h2 class="text-sm md:text-base font-extrabold text-white tracking-widest uppercase">My Projects</h2>
+                <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+            </div>
+
+            <!-- Grid 1 kolom di mobile, 2 kolom di tablet/desktop -->
+            <div id="projects-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+                <!-- Diisi via JS -->
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center py-6 text-xs text-slate-500 font-medium mt-4 relative z-10 mono border-t border-white/5">
+            <p>System Online • Press <kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-slate-700 text-[10px]">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-slate-700 text-[10px]">K</kbd> to search</p>
+        </footer>
+    </div>
+
+    <!-- ======================================================================
+    MODALS & OVERLAYS
+    ====================================================================== -->
+    
+    <!-- Search / Command Palette Modal -->
+    <div id="search-modal" class="modal-overlay">
+        <div class="modal-content relative w-full max-w-2xl glass-panel rounded-2xl overflow-hidden flex flex-col max-h-[80vh] border border-amber-500/30 mx-4">
+            <!-- Glow Border -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-yellow-400"></div>
+            
+            <div class="flex items-center px-5 py-4 border-b border-white/5 gap-3 bg-black/40">
+                <i class="fas fa-terminal text-amber-400 text-base"></i>
+                <input type="text" id="search-input" placeholder="Search projects..." class="flex-1 bg-transparent border-none outline-none text-sm md:text-base text-white placeholder-slate-500 mono" autocomplete="off">
+                <kbd class="hidden sm:block bg-black/50 border border-slate-700 rounded px-2 py-1 text-xs mono text-slate-400">ESC</kbd>
+            </div>
+
+            <!-- Results -->
+            <div id="search-results" class="overflow-y-auto p-2 flex-1 space-y-1 bg-black/20"></div>
+            
+            <div id="search-empty" class="hidden p-10 text-center text-slate-500">
+                <i class="fas fa-ghost text-4xl mb-3 opacity-50"></i>
+                <p class="text-sm font-mono text-slate-400">No projects found.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share/Export Modal -->
+    <div id="share-modal" class="modal-overlay">
+        <div class="modal-content relative w-full max-w-sm glass-panel rounded-2xl p-6 border border-white/10 mx-4">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-share-nodes text-amber-400"></i> Share Hub</h3>
+                <button onclick="closeShareModal()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-black/30 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition focus:outline-none"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="flex flex-col items-center gap-5">
+                <div class="bg-white p-3 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.3)]" id="qrcode-container"></div>
+                <p class="text-xs text-center text-slate-400 font-mono">Scan QR Code to open on mobile</p>
+                
+                <div class="w-full flex gap-2">
+                    <input type="text" id="share-url" readonly class="flex-1 input-dark rounded-xl px-3 py-2 text-xs mono">
+                    <button onclick="copyShareUrl()" class="btn-action btn-upload text-white px-4 py-2 rounded-xl text-xs font-bold focus:outline-none"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 glass-panel border-l-4 border-l-emerald-500 px-5 py-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 z-50 flex items-center gap-3 mx-4 md:mx-0">
+        <i class="fas fa-check-circle text-emerald-400 text-lg"></i>
+        <span id="toast-msg" class="text-sm font-bold text-white">Success!</span>
+    </div>
+
+    <!-- ======================================================================
+    JAVASCRIPT: LOGIKA APLIKASI
+    ====================================================================== -->
+    <script>
+        const DOM = {
+            profileImg: document.getElementById('profile-img'),
+            profileName: document.getElementById('profile-name'),
+            profileTagline: document.getElementById('profile-tagline'),
+            profileBio: document.getElementById('profile-bio'),
+            profileLocation: document.getElementById('profile-location'),
+            socialContainer: document.getElementById('social-container'),
+            
+            clockTime: document.getElementById('clock-time'),
+            clockDate: document.getElementById('clock-date'),
+            greetingText: document.getElementById('greeting-text'),
+            
+            quoteContainer: document.getElementById('quote-container'),
+            quoteText: document.getElementById('quote-text'),
+            
+            projectsContainer: document.getElementById('projects-container'),
+            
+            searchModal: document.getElementById('search-modal'),
+            searchInput: document.getElementById('search-input'),
+            searchResults: document.getElementById('search-results'),
+            searchEmpty: document.getElementById('search-empty'),
+            
+            toast: document.getElementById('toast'),
+            toastMsg: document.getElementById('toast-msg'),
+            shareModal: document.getElementById('share-modal'),
+            shareUrl: document.getElementById('share-url')
+        };
+
+        let qrCodeInstance = null;
+        let isSearchOpen = false;
+
+        function initApp() {
+            // Render Profile
+            DOM.profileImg.src = DATA.profil.foto;
+            DOM.profileName.textContent = DATA.profil.nama;
+            DOM.profileTagline.textContent = DATA.profil.tagline;
+            DOM.profileBio.textContent = DATA.profil.bio;
+            DOM.profileLocation.textContent = DATA.profil.lokasi;
+
+            // Render Socials (Updated colors to match yellow theme hover state)
+            DOM.socialContainer.innerHTML = DATA.sosialMedia.map(soc => `
+                <a href="${soc.url}" target="_blank" class="w-10 h-10 rounded-xl bg-black/40 border border-slate-700 hover:border-amber-500 hover:bg-amber-500/20 text-slate-400 hover:text-white flex items-center justify-center transition-all shadow-sm" title="${soc.nama}">
+                    <i class="${soc.icon} text-base"></i>
+                </a>
+            `).join('');
+
+            // Render Quotes
+            if (DATA.pengaturan.showQuotes && DATA.quotes.length > 0) {
+                const randomQuote = DATA.quotes[Math.floor(Math.random() * DATA.quotes.length)];
+                DOM.quoteText.textContent = `"${randomQuote}"`;
+            } else {
+                DOM.quoteContainer.style.display = 'none';
+            }
+
+            renderProjects();
+            
+            // Start Clock
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            setupPWA();
+        }
+
+        function renderProjects() {
+            let html = '';
+            
+            // Render Exactly 4 Items
+            const itemsToRender = DATA.projects.slice(0, 4);
+
+            itemsToRender.forEach(item => {
+                html += `
+                    <div class="glass-panel glass-card-hover rounded-2xl p-5 flex flex-col justify-between h-full relative group">
+                        <div class="flex flex-col sm:flex-row sm:items-start gap-4 mb-5 relative z-10">
+                            <!-- Icon Box -->
+                            <div class="w-12 h-12 rounded-xl bg-black/50 border border-slate-700 flex items-center justify-center text-amber-400 text-xl shadow-inner group-hover:bg-amber-500 group-hover:text-white group-hover:border-amber-400 transition-all duration-300 flex-shrink-0">
+                                <i class="${item.icon}"></i>
+                            </div>
+                            <!-- Details -->
+                            <div class="flex-1 min-w-0 mt-2 sm:mt-0">
+                                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                    <h3 class="font-bold text-white text-base truncate" title="${item.nama}">${item.nama}</h3>
+                                    ${item.tag ? `<span class="text-[9px] uppercase font-bold tracking-wider bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 px-1.5 py-0.5 rounded">${item.tag}</span>` : ''}
+                                </div>
+                                <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mono">${item.deskripsi}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="flex gap-2 mt-auto relative z-10">
+                            <a href="${item.url}" target="_blank" class="flex-1 bg-black/40 border border-slate-700 hover:border-amber-500 hover:bg-amber-500/20 text-white text-center py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
+                                Launch <i class="fas fa-external-link-alt text-[10px]"></i>
+                            </a>
+                            <button onclick="copyToClipboard('${item.url}', 'Project link copied!')" class="px-4 bg-black/40 border border-slate-700 hover:bg-slate-800 rounded-xl transition-colors text-slate-400 hover:text-white focus:outline-none" title="Copy Link">
+                                <i class="fas fa-link text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            DOM.projectsContainer.innerHTML = html;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            DOM.clockTime.textContent = `${hours}:${minutes}`;
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            DOM.clockDate.textContent = now.toLocaleDateString('id-ID', options);
+
+            let greeting = 'Selamat Malam';
+            const h = now.getHours();
+            if (h >= 4 && h < 11) greeting = 'Selamat Pagi';
+            else if (h >= 11 && h < 15) greeting = 'Selamat Siang';
+            else if (h >= 15 && h < 18) greeting = 'Selamat Sore';
+            
+            const firstName = DATA.profil.nama.split(' ')[0];
+            const fullGreeting = `${greeting}, ${firstName}!`;
+            if (DOM.greetingText.textContent !== fullGreeting) {
+                DOM.greetingText.textContent = fullGreeting;
+            }
+        }
+
+        function toggleSearch() {
+            isSearchOpen = !isSearchOpen;
+            if (isSearchOpen) {
+                DOM.searchModal.classList.add('active');
+                setTimeout(() => DOM.searchInput.focus(), 50);
+                renderSearchResults('');
+            } else {
+                DOM.searchModal.classList.remove('active');
+                DOM.searchInput.value = '';
+            }
+        }
+
+        DOM.searchModal.addEventListener('click', (e) => {
+            if(e.target === DOM.searchModal) toggleSearch();
+        });
+        DOM.shareModal.addEventListener('click', (e) => {
+            if(e.target === DOM.shareModal) closeShareModal();
+        });
+
+        let searchTimeout;
+        DOM.searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => renderSearchResults(e.target.value), 200);
+        });
+
+        function renderSearchResults(query) {
+            query = query.toLowerCase().trim();
+            DOM.searchResults.innerHTML = '';
+            
+            if (query === '') {
+                DOM.searchEmpty.classList.remove('hidden');
+                DOM.searchEmpty.innerHTML = `<div class="p-4 text-center text-xs text-slate-500 mono">Type to search projects...</div>`;
+                return;
+            }
+
+            const results = DATA.projects.filter(item => 
+                item.nama.toLowerCase().includes(query) || 
+                (item.deskripsi && item.deskripsi.toLowerCase().includes(query)) ||
+                (item.tag && item.tag.toLowerCase().includes(query))
+            );
+
+            if (results.length === 0) {
+                DOM.searchEmpty.classList.remove('hidden');
+                DOM.searchEmpty.innerHTML = `
+                    <div class="p-8 text-center text-slate-500">
+                        <i class="fas fa-ghost text-3xl mb-3 opacity-50"></i>
+                        <p class="text-xs font-mono text-slate-400">No matches for "<span class="text-amber-400">${query}</span>"</p>
+                    </div>`;
+            } else {
+                DOM.searchEmpty.classList.add('hidden');
+                let html = '';
+                results.forEach(item => {
+                    html += `
+                        <a href="${item.url}" target="_blank" onclick="toggleSearch()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.05] transition-colors group">
+                            <div class="w-10 h-10 rounded-xl bg-black/50 border border-slate-700 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white group-hover:border-amber-400 transition-colors">
+                                <i class="${item.icon} text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-slate-200 truncate group-hover:text-amber-400">${highlightText(item.nama, query)}</h4>
+                                <p class="text-[10px] text-slate-500 truncate mono">${item.tag || 'Project'}</p>
+                            </div>
+                            <i class="fas fa-external-link-alt text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity text-xs"></i>
+                        </a>
+                    `;
+                });
+                DOM.searchResults.innerHTML = html;
+            }
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="bg-amber-500/30 text-yellow-300">$1</span>');
+        }
+
+        function copyEmail() { copyToClipboard(DATA.profil.email, 'Email address copied!'); }
+
+        function copyToClipboard(text, successMsg) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => showToast(successMsg));
+            } else {
+                const ta = document.createElement("textarea");
+                ta.value = text; ta.style.position = "fixed"; ta.style.left = "-999999px";
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                try { document.execCommand('copy'); showToast(successMsg); } 
+                catch (err) { showToast('Copy failed'); }
+                ta.remove();
+            }
+        }
+
+        function showToast(message) {
+            DOM.toastMsg.textContent = message;
+            DOM.toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => DOM.toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+
+        function showShareModal() {
+            const currentUrl = window.location.href.split('#')[0].split('?')[0]; 
+            DOM.shareUrl.value = currentUrl;
+            DOM.shareModal.classList.add('active');
+
+            if (!qrCodeInstance) {
+                document.getElementById('qrcode-container').innerHTML = '';
+                qrCodeInstance = new QRCode(document.getElementById("qrcode-container"), {
+                    text: currentUrl, width: 150, height: 150,
+                    colorDark : "#000000", colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            } else {
+                qrCodeInstance.clear();
+                qrCodeInstance.makeCode(currentUrl);
+            }
+        }
+
+        function closeShareModal() { DOM.shareModal.classList.remove('active'); }
+        function copyShareUrl() { copyToClipboard(DOM.shareUrl.value, 'Hub Link copied!'); }
+
+        function setupPWA() {
+            const manifest = {
+                name: DATA.profil.nama,
+                short_name: "Hub",
+                display: "standalone",
+                background_color: "#050505",
+                theme_color: "#f59e0b",
+                icons: [{ src: DATA.profil.foto, sizes: "192x192 512x512", type: "image/png", purpose: "any maskable" }]
+            };
+            const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+            document.getElementById('manifest-link').setAttribute('href', URL.createObjectURL(blob));
+        }
+
+        window.addEventListener('keydown', (e) => {
+            // Search: "/" atau "Ctrl+K"
+            if (e.key === '/' && document.activeElement !== DOM.searchInput && !isSearchOpen) {
+                e.preventDefault(); toggleSearch();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault(); toggleSearch();
+            }
+            // Esc
+            if (e.key === 'Escape') {
+                if (isSearchOpen) toggleSearch();
+                closeShareModal();
+            }
+        });
+
+        // Init App
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
